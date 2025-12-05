@@ -10,9 +10,12 @@ class Pencil extends Tool {
 
     void update() {
         if (isMouseDragged) {
-            stroke(0);
+            pushStyle();
+            stroke(currentColor);
             strokeWeight(size);
+            noFill();
             line(pmouseX, pmouseY, mouseX, mouseY);
+            popStyle();
         }
     }
 }

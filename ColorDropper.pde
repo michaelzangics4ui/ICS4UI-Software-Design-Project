@@ -2,12 +2,23 @@ class colDrop extends Tool {
   
   colDrop(float s) {
     super(s);
+    currentColor = color(0);
+    type = "colDrop";
   }
   
-  void applyTool() {
-    int c = get(mouseX, mouseY);
+  void update() {
+    // Circle preview - only shows current frame
+    color c = get(mouseX, mouseY);
+    fill(c);
+    circle(mouseX, mouseY, 20);
+    noFill();
+  }
+ 
+
+  void clickTool() {
+    color c = get(mouseX, mouseY);
+    //println("Color picked: " + red(c) + ", " + green(c) + ", " + blue(c));
     currentColor = c;
-    println(currentColor);
   }
   
 }

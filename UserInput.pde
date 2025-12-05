@@ -1,4 +1,5 @@
 boolean isMouseDragged;
+PImage lastScreen;
 
 
 
@@ -12,6 +13,7 @@ void mouseReleased() {
         if (currentTool != null) {
             currentTool.toolDone();
         }
+        bottomRight = new PVector(mouseX, mouseY);
 
     }
 
@@ -24,18 +26,43 @@ void keyPressed() {
         currentTool = new Eraser(50);
     }
     if (key == 'c' || key == 'C') {
-        currentTool = new Crop(5);
+        currentTool = new Select(5);
     }
 
     if (key == 'x' || key == 'X') {
         currentTool = new colDrop(1);
     }
+    
+    if (key == '-' || key == '_') {
+        currentColor = color(255, 100, 0);
+    }
+
+    if (key == 'u' || key == 'U') {
+        currentTool = new Undo(1);
+    }
+
+    if (key == 'r' || key == 'R') {
+        currentTool = new Redo(1);
+    }
 }
 
 void mousePressed() {
     if (currentTool != null) {
+        lastScreen = get();
         currentTool.applyTool();
+        println("Mouse pressed, tool applied");
+        topLeft = new PVector(mouseX, mouseY);
     }
+    
+
+
+
     
 }
 
+void mouseClicked() {
+    if (currentTool != null) {
+        currentTool.clickTool();
+    }
+    
+}

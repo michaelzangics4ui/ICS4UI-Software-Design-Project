@@ -8,9 +8,12 @@ class Eraser extends Tool {
     
     void update() {
         if (isMouseDragged) {
+            pushStyle();
             stroke(currentColor);
             strokeWeight(size);
+            noFill();
             line(pmouseX, pmouseY, mouseX, mouseY);
+            popStyle();
         }
     }
 }

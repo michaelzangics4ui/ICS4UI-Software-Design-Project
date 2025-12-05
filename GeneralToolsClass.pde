@@ -23,4 +23,8 @@ class Tool {
 
     }
 
+    void clickTool() {
+        
+    }
+
 }
