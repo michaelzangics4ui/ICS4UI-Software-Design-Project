@@ -1,11 +1,11 @@
 class Tool {
     String type;
-    float size;
+    float toolSize;
     color col;
 
 
     Tool(float s) {
-        size = s;
+        toolSize = s;
         col = currentColor;
     }
 

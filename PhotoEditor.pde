@@ -1,3 +1,4 @@
+import g4p_controls.*;
 color currentColor = color(0, 0, 0);
 Tool currentTool;
 PImage screen;
@@ -5,13 +6,16 @@ PImage sample;
 PImage currentScreen;
 PVector topLeft;
 PVector bottomRight;
+int toolSize = 10;
 
 void setup() {
-    fullScreen();
+    //fullScreen();
+    size(800,600);
     background(255);
     currentTool = new Tool(1);
-    sample = loadImage("20251126_212316.jpg");
-    image(sample, 0, 0, width, height);
+    sample = loadImage("guy.jpg");
+    image(sample, 0, 200, width, height);
+    createGUI();
 
 
 
@@ -27,7 +31,7 @@ void draw() {
 
     if (currentTool != null) {
         currentTool.update();
-    
+   
 
     }
     fill(255);
