@@ -19,6 +19,7 @@ class colDrop extends Tool {
     color c = get(mouseX, mouseY);
     //println("Color picked: " + red(c) + ", " + green(c) + ", " + blue(c));
     currentColor = c;
+    println("color selected: " + red(c) + ", " + green(c) + ", " + blue(c));
   }
   
 }
