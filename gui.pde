@@ -27,7 +27,7 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
             break;
 
         //case "Crop":
-        //    currentTool = new Crop(toolSize);
+        //    currentTool = new CropTool(toolSize);
         //    break;
 
         case "colDrop":
@@ -39,15 +39,16 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
   //currentTool = mode.getSelectedText();} //_CODE_:mode:844633:
 
 public void crop_clicked(GButton source, GEvent event) { //_CODE_:crop:743868:
-  println("crop - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new CropTool(1);
+  
 } //_CODE_:crop:743868:
 
 public void zoomplus_clicked(GButton source, GEvent event) { //_CODE_:zoomplus:659262:
-  println("zoomplus - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new ZoomIn(1);
 } //_CODE_:zoomplus:659262:
 
 public void zoomminus_clicked(GButton source, GEvent event) { //_CODE_:zoomminus:480973:
-  println("zoomminus - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new ZoomOut(1);
 } //_CODE_:zoomminus:480973:
 
 public void size_changed(GCustomSlider source, GEvent event) { //_CODE_:size_slider:783959:

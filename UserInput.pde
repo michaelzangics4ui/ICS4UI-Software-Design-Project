@@ -33,7 +33,7 @@ void keyPressed() {
         currentTool = new colDrop(1);
     }
     
-    if (key == '-' || key == '_') {
+    if (key == 'h' || key == 'H') {
         currentColor = color(255, 100, 0);
     }
 
@@ -43,6 +43,15 @@ void keyPressed() {
     if (key == 'r' || key == 'R') {
         currentTool = new Redo(1);
     }
+    if (key == 'b' || key == 'B') {
+        currentTool = new CropTool(1); 
+    }
+    if (key == '-' || key == '_') {
+        currentTool = new ZoomOut(1); 
+    }
+    if (key == '=' || key == '+') {
+        currentTool = new ZoomIn(1); 
+    } 
 }
 
 void mousePressed() {
