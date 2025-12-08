@@ -24,10 +24,13 @@ void setup() {
 void draw() {
 
 
-    if (currentTool.type == "colDrop" || currentTool.type == "Crop" || currentTool.type == "Select") {
+    if (currentTool.type == "colDrop" || currentTool.type == "Select") {
         image(screen, 0, 0);
     }
-    screen = get();
+    
+    if (currentTool.type != "Crop" || !((CropTool)currentTool).isSelecting) {
+      screen = get();
+    }
 
     if (currentTool != null) {
         currentTool.update();
