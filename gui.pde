@@ -38,11 +38,6 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
 }
   //currentTool = mode.getSelectedText();} //_CODE_:mode:844633:
 
-public void crop_clicked(GButton source, GEvent event) { //_CODE_:crop:743868:
-  currentTool = new CropTool(1);
-  
-} //_CODE_:crop:743868:
-
 public void zoomplus_clicked(GButton source, GEvent event) { //_CODE_:zoomplus:659262:
   currentTool = new ZoomIn(1);
 } //_CODE_:zoomplus:659262:
@@ -56,20 +51,12 @@ public void size_changed(GCustomSlider source, GEvent event) { //_CODE_:size_sli
 } //_CODE_:size_slider:783959:
 
 public void rotate_rightclicked(GButton source, GEvent event) { //_CODE_:rotate_right:702750:
-  println("rotate_right - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new rotateRight(1);
 } //_CODE_:rotate_right:702750:
 
 public void rotate_leftclicked(GButton source, GEvent event) { //_CODE_:rotate_left:293688:
-  println("rotate_left - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new rotateLeft(1);
 } //_CODE_:rotate_left:293688:
-
-public void undo_clicked(GButton source, GEvent event) { //_CODE_:undo:653612:
-    currentTool = new Undo(1);
-} //_CODE_:undo:653612:
-
-public void redo_clicked(GButton source, GEvent event) { //_CODE_:redo:248589:
-  println("redo - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:redo:248589:
 
 public void greyscale_clicked(GCheckbox source, GEvent event) { //_CODE_:greyscale:981413:
   println("greyscale - GCheckbox >> GEvent." + event + " @ " + millis());
@@ -91,6 +78,10 @@ public void textbox_clicked(GTextField source, GEvent event) { //_CODE_:TEXT:215
   currentTool = new Text(1);
 } //_CODE_:TEXT:215710:
 
+public void crop_clicked(GButton source, GEvent event) { //_CODE_:crop:577439:
+  currentTool = new CropTool(1);
+} //_CODE_:crop:577439:
+
 
 
 // Create all the GUI controls. 
@@ -100,78 +91,75 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  mode = new GDropList(this, 19, 75, 120, 120, 5, 10);
+  mode = new GDropList(this, 8, 42, 120, 120, 5, 10);
   mode.setItems(loadStrings("list_844633"), 0);
   mode.addEventHandler(this, "mode_clicked");
-  crop = new GButton(this, 160, 74, 80, 30);
-  crop.setText("CROP");
-  crop.addEventHandler(this, "crop_clicked");
-  zoomplus = new GButton(this, 264, 71, 80, 30);
+  zoomplus = new GButton(this, 240, 36, 80, 28);
   zoomplus.setText("ZOOM +");
   zoomplus.addEventHandler(this, "zoomplus_clicked");
-  zoomminus = new GButton(this, 368, 71, 80, 30);
+  zoomminus = new GButton(this, 333, 34, 80, 30);
   zoomminus.setText("ZOOM -");
   zoomminus.addEventHandler(this, "zoomminus_clicked");
-  size_slider = new GCustomSlider(this, 160, 163, 100, 40, "blue18px");
+  size_slider = new GCustomSlider(this, 147, 98, 100, 40, "blue18px");
   size_slider.setLimits(10.0, 1.0, 50.0);
   size_slider.setNumberFormat(G4P.DECIMAL, 2);
   size_slider.setOpaque(false);
   size_slider.addEventHandler(this, "size_changed");
-  rotate_right = new GButton(this, 468, 71, 80, 30);
+  rotate_right = new GButton(this, 429, 33, 80, 30);
   rotate_right.setText("ROTATE RIGHT");
   rotate_right.addEventHandler(this, "rotate_rightclicked");
-  rotate_left = new GButton(this, 569, 71, 80, 30);
+  rotate_left = new GButton(this, 523, 32, 80, 30);
   rotate_left.setText("ROTATE LEFT");
   rotate_left.addEventHandler(this, "rotate_leftclicked");
-  undo = new GButton(this, 160, 118, 80, 30);
-  undo.setText("UNDO");
-  undo.addEventHandler(this, "undo_clicked");
-  redo = new GButton(this, 264, 117, 80, 30);
-  redo.setText("REDO");
-  redo.addEventHandler(this, "redo_clicked");
-  greyscale = new GCheckbox(this, 360, 124, 120, 20);
+  greyscale = new GCheckbox(this, 338, 78, 120, 20);
   greyscale.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   greyscale.setText("GREYSCALE");
   greyscale.setOpaque(false);
   greyscale.addEventHandler(this, "greyscale_clicked");
-  contrast = new GCheckbox(this, 490, 123, 120, 20);
+  contrast = new GCheckbox(this, 474, 77, 120, 20);
   contrast.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   contrast.setText("CONTRAST");
   contrast.setOpaque(false);
   contrast.addEventHandler(this, "contrast_clicked");
-  schattmanify = new GCheckbox(this, 361, 163, 237, 20);
+  schattmanify = new GCheckbox(this, 338, 116, 237, 20);
   schattmanify.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   schattmanify.setText("SCHATTMANIFY (FACE REQUIRED)");
   schattmanify.setOpaque(false);
   schattmanify.addEventHandler(this, "schattmanify_clicked");
-  title = new GLabel(this, 15, 25, 113, 20);
+  title = new GLabel(this, 6, 7, 113, 34);
   title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  title.setText("NAME (CHANGE)");
+  title.setText("OPTIX PHOTO EDITOR");
   title.setOpaque(false);
-  reset = new GButton(this, 637, 120, 80, 30);
+  reset = new GButton(this, 627, 75, 80, 30);
   reset.setText("RESET");
   reset.setLocalColorScheme(GCScheme.RED_SCHEME);
   reset.addEventHandler(this, "reset_clicked");
-  TEXT = new GTextField(this, 661, 72, 120, 30, G4P.SCROLLBARS_NONE);
+  TEXT = new GTextField(this, 616, 32, 120, 30, G4P.SCROLLBARS_NONE);
   TEXT.setPromptText("TYPE TEXT HERE");
   TEXT.setOpaque(true);
   TEXT.addEventHandler(this, "textbox_clicked");
+  label1 = new GLabel(this, 145, 77, 80, 20);
+  label1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label1.setText("Size Slider");
+  label1.setOpaque(false);
+  crop = new GButton(this, 148, 36, 80, 30);
+  crop.setText("CROP");
+  crop.addEventHandler(this, "crop_clicked");
 }
 
 // Variable declarations 
 // autogenerated do not edit
 GDropList mode; 
-GButton crop; 
 GButton zoomplus; 
 GButton zoomminus; 
 GCustomSlider size_slider; 
 GButton rotate_right; 
 GButton rotate_left; 
-GButton undo; 
-GButton redo; 
 GCheckbox greyscale; 
 GCheckbox contrast; 
 GCheckbox schattmanify; 
 GLabel title; 
 GButton reset; 
 GTextField TEXT; 
+GLabel label1; 
+GButton crop; 

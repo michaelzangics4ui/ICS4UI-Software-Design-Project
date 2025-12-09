@@ -8,7 +8,7 @@ class Undo extends Tool {
     }
 
     void update() {
-        println("Undo.update() called, lastScreen is: " + (lastScreen != null ? "NOT NULL" : "NULL"));
+        println("Undid last change");
         if (lastScreen != null) {
             println("Drawing lastScreen - size: " + lastScreen.width + "x" + lastScreen.height);
             background(255);

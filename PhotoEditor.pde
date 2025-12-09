@@ -8,6 +8,7 @@ PImage fullImage; // this captures the complete, full resolution version of our 
 PVector topLeft;
 PVector bottomRight;
 int toolSize = 10;
+int rotationCount = 0;
 boolean textBoxActive;
 
 void setup() {
