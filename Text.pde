@@ -19,7 +19,6 @@ class Text extends Tool {
             // Set the position where text will be placed
             textPosition = new PVector(mouseX, mouseY);
             
-            // Draw the text permanently
             pushStyle();
             fill(currentColor);
             textSize(textSizeValue);
