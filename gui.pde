@@ -55,10 +55,6 @@ public void size_changed(GCustomSlider source, GEvent event) { //_CODE_:size_sli
   toolSize = size_slider.getValueI();
 } //_CODE_:size_slider:783959:
 
-public void text_clicked(GButton source, GEvent event) { //_CODE_:text_button:536598:
-  println("text_button - GButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:text_button:536598:
-
 public void rotate_rightclicked(GButton source, GEvent event) { //_CODE_:rotate_right:702750:
   println("rotate_right - GButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:rotate_right:702750:
@@ -87,6 +83,14 @@ public void schattmanify_clicked(GCheckbox source, GEvent event) { //_CODE_:scha
   println("checkbox1 - GCheckbox >> GEvent." + event + " @ " + millis());
 } //_CODE_:schattmanify:402076:
 
+public void reset_clicked(GButton source, GEvent event) { //_CODE_:reset:994712:
+  currentTool = new Reset(1);
+} //_CODE_:reset:994712:
+
+public void textbox_clicked(GTextField source, GEvent event) { //_CODE_:TEXT:215710:
+  currentTool = new Text(1);
+} //_CODE_:TEXT:215710:
+
 
 
 // Create all the GUI controls. 
@@ -113,13 +117,10 @@ public void createGUI(){
   size_slider.setNumberFormat(G4P.DECIMAL, 2);
   size_slider.setOpaque(false);
   size_slider.addEventHandler(this, "size_changed");
-  text_button = new GButton(this, 467, 71, 80, 30);
-  text_button.setText("TEXT");
-  text_button.addEventHandler(this, "text_clicked");
-  rotate_right = new GButton(this, 567, 71, 80, 30);
+  rotate_right = new GButton(this, 468, 71, 80, 30);
   rotate_right.setText("ROTATE RIGHT");
   rotate_right.addEventHandler(this, "rotate_rightclicked");
-  rotate_left = new GButton(this, 663, 70, 80, 30);
+  rotate_left = new GButton(this, 569, 71, 80, 30);
   rotate_left.setText("ROTATE LEFT");
   rotate_left.addEventHandler(this, "rotate_leftclicked");
   undo = new GButton(this, 160, 118, 80, 30);
@@ -147,6 +148,14 @@ public void createGUI(){
   title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   title.setText("NAME (CHANGE)");
   title.setOpaque(false);
+  reset = new GButton(this, 637, 120, 80, 30);
+  reset.setText("RESET");
+  reset.setLocalColorScheme(GCScheme.RED_SCHEME);
+  reset.addEventHandler(this, "reset_clicked");
+  TEXT = new GTextField(this, 661, 72, 120, 30, G4P.SCROLLBARS_NONE);
+  TEXT.setPromptText("TYPE TEXT HERE");
+  TEXT.setOpaque(true);
+  TEXT.addEventHandler(this, "textbox_clicked");
 }
 
 // Variable declarations 
@@ -156,7 +165,6 @@ GButton crop;
 GButton zoomplus; 
 GButton zoomminus; 
 GCustomSlider size_slider; 
-GButton text_button; 
 GButton rotate_right; 
 GButton rotate_left; 
 GButton undo; 
@@ -165,3 +173,5 @@ GCheckbox greyscale;
 GCheckbox contrast; 
 GCheckbox schattmanify; 
 GLabel title; 
+GButton reset; 
+GTextField TEXT; 
