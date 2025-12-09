@@ -50,6 +50,9 @@ class CropTool extends Tool {
             
             background(255);
             image(croppedImage, 0, 200);
+            
+            fullImage = croppedImage.copy();
+            screen = get();
           }
           else { 
             println("cropped area is too small, crop cancelled.");

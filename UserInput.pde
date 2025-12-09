@@ -4,20 +4,31 @@ PImage lastScreen;
 
 
 void mouseDragged() {
+    // Only allow dragging below y=200, so tools won't affect the gui buttons.
+    if (mouseY > 200 && pmouseY > 200) {
         isMouseDragged = true;
-        
-    }
+    } 
+    else {
+        isMouseDragged = false;
+    }    
+   }
 
 void mouseReleased() {
         isMouseDragged = false;
-        if (currentTool != null) {
+        if (currentTool != null && mouseY > 200) {
             currentTool.toolDone();
         }
         bottomRight = new PVector(mouseX, mouseY);
-
+        if (currentTool.type == "Pencil" || currentTool.type == "Eraser") {
+        fullImage = get(0, 200, width, height - 200);
+      }
     }
 
 void keyPressed() {
+  
+    if (textBoxActive) { // checks if the text box has been clicked
+        return;
+    }
     if (key == 'p' || key == 'P') {
         currentTool = new Pencil(5);
     }
@@ -55,16 +66,26 @@ void keyPressed() {
 }
 
 void mousePressed() {
-    // 1. Debugging: Print where we clicked to the console
     println("Mouse clicked at: " + mouseX + ", " + mouseY);
     
-    // 2. Check if the mouse is in the UI area (Safe Zone)
-    // We assume the UI is at the bottom. 
-    // If your buttons are elsewhere, you must adjust 'clickedOnUI()' below.
+    // checks if the mouse if clicked on the text box. if clicked, then turns off all keyboard shortcuts.
+    if (mouseX >= 661 && mouseX <= 781 && mouseY >= 72 && mouseY <= 102) {
+        textBoxActive = true;
+        return;
+    } else {
+        textBoxActive = false;
+    }
+        // Check if mouse is in the button area (above y=200)
+    if (mouseY < 200) {
+        println(">>> Button Area Click - Tool Action Skipped <<<");
+        return; // Exit early, don't apply tool
+    }
+    
+    // checks if mouse is in photo editor area (y>200)
     if (clickedOnUI() == false) {
         
         if (currentTool != null) {
-            lastScreen = get(); // Save the state BEFORE drawing
+            lastScreen = get(); // Save the state before drawing
             println(">>> Screen Saved (Valid Draw Action) <<<");
             
             currentTool.applyTool();
@@ -75,9 +96,7 @@ void mousePressed() {
     }
 }
 
-// Helper function to define where your buttons are
 boolean clickedOnUI() {
-    // CHANGE THIS VALUE if your UI is taller than 30 pixels
     int uiHeight = 40; 
     
     // Returns true if mouse is at the bottom of the screen
@@ -88,7 +107,7 @@ boolean clickedOnUI() {
 }
 
 void mouseClicked() {
-    if (currentTool != null) {
+    if (currentTool != null && mouseY > 200) {
         currentTool.clickTool();
     }
     
