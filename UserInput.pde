@@ -72,14 +72,17 @@ void mousePressed() {
     if (mouseX >= 661 && mouseX <= 781 && mouseY >= 72 && mouseY <= 102) {
         textBoxActive = true;
         return;
-    } else {
+    } 
+    else {
         textBoxActive = false;
     }
         // Check if mouse is in the button area (above y=200)
     if (mouseY < 200) {
-        println(">>> Button Area Click - Tool Action Skipped <<<");
-        return; // Exit early, don't apply tool
+        println("Buton Area Clicked - Tool Action Skipped");
+        return; // Doesn't apply whatever the current tool is on the button interface.
     }
+    
+    
     
     // checks if mouse is in photo editor area (y>200)
     if (clickedOnUI() == false) {
