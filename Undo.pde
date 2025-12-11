@@ -12,7 +12,7 @@ class Undo extends Tool {
         if (lastScreen != null) {
             println("Drawing lastScreen - size: " + lastScreen.width + "x" + lastScreen.height);
             background(255);
-            image(lastScreen, 0, 0);
+            image(lastScreen, 0, 200);
             println("lastScreen drawn!");
         }
     }

@@ -82,9 +82,9 @@ void mousePressed() {
         return; // Doesn't apply whatever the current tool is on the button interface.
     }
     
+    //  greyscale = new GCheckbox(this, 338, 78, 120, 20);
+
     
-    
-    // checks if mouse is in photo editor area (y>200)
     if (clickedOnUI() == false) {
         
         if (currentTool != null) {

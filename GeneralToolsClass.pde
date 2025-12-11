@@ -7,6 +7,7 @@ class Tool {
     Tool(float s) {
         toolSize = s;
         col = currentColor;
+        this.type = "Nothing";
     }
 
    

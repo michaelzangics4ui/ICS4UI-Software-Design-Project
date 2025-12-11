@@ -26,14 +26,13 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
             currentTool = new Eraser(toolSize);
             break;
 
-        //case "Crop":
-        //    currentTool = new CropTool(toolSize);
-        //    break;
-
         case "colDrop":
             currentTool = new colDrop(toolSize);
             break;
-
+            
+        case "Blur":
+            currentTool = new Blur(toolSize);
+            break;
     }
 }
   //currentTool = mode.getSelectedText();} //_CODE_:mode:844633:
@@ -59,11 +58,11 @@ public void rotate_leftclicked(GButton source, GEvent event) { //_CODE_:rotate_l
 } //_CODE_:rotate_left:293688:
 
 public void greyscale_clicked(GCheckbox source, GEvent event) { //_CODE_:greyscale:981413:
-  println("greyscale - GCheckbox >> GEvent." + event + " @ " + millis());
+  greyScaleActive = greyscale.isSelected();
 } //_CODE_:greyscale:981413:
 
 public void contrast_clicked(GCheckbox source, GEvent event) { //_CODE_:contrast:689614:
-  println("contrast - GCheckbox >> GEvent." + event + " @ " + millis());
+  contrastActive = contrast.isSelected();
 } //_CODE_:contrast:689614:
 
 public void schattmanify_clicked(GCheckbox source, GEvent event) { //_CODE_:schattmanify:402076:
@@ -145,6 +144,18 @@ public void createGUI(){
   crop = new GButton(this, 148, 36, 80, 30);
   crop.setText("CROP");
   crop.addEventHandler(this, "crop_clicked");
+  label2 = new GLabel(this, 317, 134, 353, 56);
+  label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label2.setText("NOTE: FILTERS GREYSCALE AND CONTRAST ARE NOT UNDOABLE UNLESS THEY ARE MOST RECENT CHANGE SINCE THEY MANIPULATE PIXELS.");
+  label2.setOpaque(false);
+  label3 = new GLabel(this, 242, 76, 80, 20);
+  label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label3.setText("UNDO - U");
+  label3.setOpaque(false);
+  label4 = new GLabel(this, 240, 97, 80, 20);
+  label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label4.setText("REDO - R");
+  label4.setOpaque(false);
 }
 
 // Variable declarations 
@@ -163,3 +174,6 @@ GButton reset;
 GTextField TEXT; 
 GLabel label1; 
 GButton crop; 
+GLabel label2; 
+GLabel label3; 
+GLabel label4; 

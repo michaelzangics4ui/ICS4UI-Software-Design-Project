@@ -9,11 +9,11 @@ class Blur extends Tool {
             if (isMouseDragged) {
                 pushStyle();
                 noStroke();
-                for (int i = 0; i < size; i++) {
-                    float offsetX = random(-size / 2, size / 2);
-                    float offsetY = random(-size / 2, size / 2);
+                for (int i = 0; i < toolSize; i++) {
+                    float offsetX = random(-toolSize / 2, toolSize / 2);
+                    float offsetY = random(-toolSize / 2, toolSize / 2);
                     fill(get(int(mouseX + offsetX), int(mouseY + offsetY)));
-                    ellipse(mouseX + offsetX, mouseY + offsetY, size / 5, size / 5);
+                    ellipse(mouseX + offsetX, mouseY + offsetY, toolSize / 5, toolSize / 5);
                 }
                 popStyle();
             }

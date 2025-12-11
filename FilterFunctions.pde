@@ -1,7 +1,8 @@
 void greyScale() {
+    currentTool = new Tool(5);
     pushStyle();
     loadPixels();
-    for (int i = 0; i < pixels.length; i++) {
+    for (int i = 160000; i < pixels.length; i++) {
         color c = pixels[i];
         float r = red(c);
         float g = green(c);
@@ -11,15 +12,16 @@ void greyScale() {
     }
     updatePixels();
     popStyle();
-
+    lastScreen.get();
 
 }
 
 
 void contrast(float C) {
+    currentTool = new Tool(5);
     pushStyle();
     loadPixels();
-    for (int i = 0; i < pixels.length; i++) {
+    for (int i = 16000; i < pixels.length; i++) {
         color c = pixels[i];
         float r = red(c);
         float g = green(c);
@@ -38,6 +40,7 @@ void contrast(float C) {
     }
     updatePixels();
     popStyle();
+    lastScreen.get();
 
 
 
