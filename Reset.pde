@@ -15,7 +15,7 @@ class Reset extends Tool {
         PImage originalImage = loadImage("guy.jpg");
         fullImage = originalImage.copy(); // Reset the working image
 
-        image(originalImage, 0, 200, width, height);
+        image(originalImage, 0, 200);
         rotationCount = 0;
         println("Image reset");
         
