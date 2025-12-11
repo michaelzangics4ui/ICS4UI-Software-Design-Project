@@ -115,7 +115,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  mode = new GDropList(this, 8, 42, 120, 120, 5, 10);
+  mode = new GDropList(this, 7, 40, 120, 120, 5, 10);
   mode.setItems(loadStrings("list_844633"), 0);
   mode.addEventHandler(this, "mode_clicked");
   zoomplus = new GButton(this, 240, 36, 80, 28);
