@@ -17,6 +17,7 @@ class Reset extends Tool {
 
         image(originalImage, 0, 200);
         rotationCount = 0;
+        zoomCount = 0;
         println("Image reset");
         
         // Switch back to default tool after reset
