@@ -1,6 +1,7 @@
 import g4p_controls.*;
 color currentColor = color(0, 0, 0);
 Tool currentTool;
+String tool;
 PImage screen;
 PImage sample;
 PImage currentScreen;
@@ -12,9 +13,7 @@ int rotationCount = 0;
 int zoomCount = 0;
 boolean textBoxActive;
 boolean greyScaleActive;
-boolean greyScaleClicked;
 boolean contrastActive;
-boolean contrastClicked;
 
 void setup() {
     //fullScreen();
@@ -32,7 +31,10 @@ void setup() {
 }
 
 void draw() {
-
+    fill(255);
+    noStroke();
+    rect(0, 0, width, 200);
+    
     if (greyScaleActive) {
      greyScale(); 
      greyScaleActive = false;
@@ -41,13 +43,13 @@ void draw() {
      contrast(64); 
      contrastActive = false;
     }
-    
-    if (currentTool.type == "colDrop" || currentTool.type == "Select") {
-        image(screen, 0, 0);
+   
+    if (currentTool.type == "colDrop") {
+        image(screen, 0, 200);
     }
     
     if (currentTool.type != "Crop" || !((CropTool)currentTool).isSelecting) {
-      screen = get();
+      screen = get(0,200,width,height-200);
 
     }
 

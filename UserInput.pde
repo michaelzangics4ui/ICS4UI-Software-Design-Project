@@ -4,6 +4,7 @@ PImage lastScreen;
 
 
 void mouseDragged() {
+
     // Only allow dragging below y=200, so tools won't affect the gui buttons.
     if (mouseY > 200 && pmouseY > 200) {
         isMouseDragged = true;
@@ -19,7 +20,7 @@ void mouseReleased() {
             currentTool.toolDone();
         }
         bottomRight = new PVector(mouseX, mouseY);
-        if (currentTool.type == "Pencil" || currentTool.type == "Eraser") {
+        if (currentTool.type == "Pencil" || currentTool.type == "Eraser" || currentTool.type == "Blur") {
         fullImage = get(0, 200, width, height - 200);
       }
     }
@@ -88,7 +89,7 @@ void mousePressed() {
     if (clickedOnUI() == false) {
         
         if (currentTool != null) {
-            lastScreen = get(); // Save the state before drawing
+            lastScreen = get(0,200,width,400); // Save the state before drawing
             println(">>> Screen Saved (Valid Draw Action) <<<");
             
             currentTool.applyTool();

@@ -20,18 +20,22 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
     switch(sel) {
         case "Pencil":
             currentTool = new Pencil(toolSize);
+            tool = "Pencil";
             break;
 
         case "Eraser":
             currentTool = new Eraser(toolSize);
+            tool = "Eraser";
             break;
 
         case "colDrop":
             currentTool = new colDrop(toolSize);
+            tool = "colDrop";
             break;
             
         case "Blur":
             currentTool = new Blur(toolSize);
+            tool = "Blur";
             break;
     }
 }
@@ -47,6 +51,27 @@ public void zoomminus_clicked(GButton source, GEvent event) { //_CODE_:zoomminus
 
 public void size_changed(GCustomSlider source, GEvent event) { //_CODE_:size_slider:783959:
   toolSize = size_slider.getValueI();
+    switch(tool) {
+        case "Pencil":
+            currentTool = new Pencil(toolSize);
+            tool = "Pencil";
+            break;
+
+        case "Eraser":
+            currentTool = new Eraser(toolSize);
+            tool = "Eraser";
+            break;
+
+        case "colDrop":
+            currentTool = new colDrop(toolSize);
+            tool = "colDrop";
+            break;
+            
+        case "Blur":
+            currentTool = new Blur(toolSize);
+            tool = "Blur";
+            break;
+    }
 } //_CODE_:size_slider:783959:
 
 public void rotate_rightclicked(GButton source, GEvent event) { //_CODE_:rotate_right:702750:
