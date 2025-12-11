@@ -18,7 +18,7 @@ void setup() {
     currentTool = new Tool(1);
     sample = loadImage("guy.jpg");
     fullImage = sample.copy();
-    image(sample, 0, 200, width, height);
+    image(sample, 0, 200);
     createGUI();
 
 
