@@ -1,7 +1,6 @@
 import g4p_controls.*;
 color currentColor = color(0, 0, 0);
 Tool currentTool;
-String tool;
 PImage screen;
 PImage sample;
 PImage currentScreen;
@@ -13,28 +12,36 @@ int rotationCount = 0;
 int zoomCount = 0;
 boolean textBoxActive;
 boolean greyScaleActive;
+boolean greyScaleClicked;
 boolean contrastActive;
+boolean contrastClicked;
+int tlbx = 24;
+int tlby = 173;
+int brbx = 1181-tlbx;
+int brby = 645-tlby;
+PImage background;
+boolean dropStatus;
 
 void setup() {
     //fullScreen();
-    size(800,600);
-    background(255);
-    currentTool = new Tool(1);
-    sample = loadImage("guy.jpg"); // LOAD PREFERRED FILE HERE
-    lastScreen = sample.copy();
-    fullImage = sample.copy();
-    image(sample, 0, 200);
     createGUI();
+    size(1200,675);
+    background(255);
+    background = loadImage("Crop.png");
+    image(background,0,0, width, height);
+    currentTool = new Tool(1);
+    sample = loadImage("face.png"); // LOAD PREFERRED FILE HERE
+    lastScreen = sample.copy();
+    image(sample, tlbx, tlby, brbx, brby);
+    fullImage = get(tlbx, tlby, brbx, brby);
+
 
 
 
 }
 
 void draw() {
-    fill(255);
-    noStroke();
-    rect(0, 0, width, 200);
-    
+
     if (greyScaleActive) {
      greyScale(); 
      greyScaleActive = false;
@@ -43,13 +50,14 @@ void draw() {
      contrast(64); 
      contrastActive = false;
     }
-   
-    if (currentTool.type == "colDrop") {
-        image(screen, 0, 200);
+    
+    if (currentTool.type == "colDrop" || currentTool.type == "Crop" || dropStatus == true) {
+        image(screen, 0, 0);
+        dropStatus = false;
     }
     
     if (currentTool.type != "Crop" || !((CropTool)currentTool).isSelecting) {
-      screen = get(0,200,width,height-200);
+      screen = get();
 
     }
 
@@ -58,11 +66,23 @@ void draw() {
    
 
     }
+   // fill(255);
+    //rect(1214, 141, 100, 30);
     fill(255);
-    rect(width-200, 0, width, 30);
-    fill(0);
     textSize(16);
-    text("Current Tool: " + currentTool.type, width-150, 20);
+    pushStyle();
+    noStroke();
+    fill(#0a1929);
+    rect(width*0.868,height*0.190, 140, 20);
+    rect(39,115,120,30);
+    pushStyle();
+    fill(255);
+    text("Current Tool: " + currentTool.type, width*0.868,height*0.207);
+
+    //println(mouseX, mouseY);
+    if (currentTool != null) {
+      println(currentTool.type);
+    }
 
 
 

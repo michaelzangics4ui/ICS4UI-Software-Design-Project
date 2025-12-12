@@ -9,16 +9,15 @@ class Blur extends Tool {
             if (isMouseDragged) {
                 pushStyle();
                 noStroke();
-                for (int i = 0; i < toolSize*5; i++) {
-                    float offsetX = random(-toolSize*2, toolSize*2);
-                    float offsetY = random(-toolSize*2, toolSize*2);
-                    fill(get(int(mouseX + offsetX), int(mouseY + offsetY)));
+                println("this");
+                for (int i = 0; i < toolSize; i++) {
+                    float offsetX = random(-toolSize / 2, toolSize / 2);
+                    float offsetY = random(-toolSize / 2, toolSize / 2);
+                    color c = get(int(mouseX + offsetX), int(mouseY + offsetY));
+                    fill(c);
                     ellipse(mouseX + offsetX, mouseY + offsetY, toolSize / 5, toolSize / 5);
                 }
                 popStyle();
             }
-        }
-        void toolDone(){
-          fullImage = get(0, 200, width, height - 200);
         }
 }

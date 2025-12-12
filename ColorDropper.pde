@@ -4,6 +4,7 @@ class colDrop extends Tool {
     super(s);
     currentColor = color(0);
     type = "colDrop";
+
   }
   
   void update() {
@@ -12,6 +13,7 @@ class colDrop extends Tool {
     fill(c);
     circle(mouseX, mouseY, 20);
     noFill();
+    dropStatus = true;
   }
  
 

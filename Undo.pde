@@ -1,7 +1,10 @@
 class Undo extends Tool {
+  
+    Tool prev;
 
-    Undo(float s) {
+    Undo(float s, Tool p) {
         super(s);
+        prev = p;
         type = "Undo";
         currentScreen = get();
 
@@ -11,10 +14,12 @@ class Undo extends Tool {
         println("Undid last change");
         if (lastScreen != null) {
             println("Drawing lastScreen - size: " + lastScreen.width + "x" + lastScreen.height);
-            background(255);
-            image(lastScreen, 0, 200);
+            image(background,0,0, width, height);
+            image(lastScreen, tlbx, tlby, brbx, brby);
             println("lastScreen drawn!");
+            println(toolSize);
         }
+        currentTool = prev;
     }
 
     

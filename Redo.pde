@@ -1,13 +1,17 @@
 class Redo extends Tool {
-    Redo(float s) {
+    Tool prev;
+  
+    Redo(float s, Tool p) {
         super(s);
         this.type = "Redo";
+        prev = p;
     }
 
     void update() {
         if (currentScreen != null) {
-            background(255);
-            image(currentScreen, 0, 0);
+          image(background,0,0, width, height); 
+          image(currentScreen, 0, 0);
         }
+        currentTool = prev;
     }
 }

@@ -1,8 +1,9 @@
 void greyScale() {
     currentTool = new Tool(5);
     pushStyle();
+    PImage currScreen = get();
     loadPixels();
-    for (int i = 160000; i < pixels.length; i++) {
+    for (int i = 0; i < pixels.length; i++) {
         color c = pixels[i];
         float r = red(c);
         float g = green(c);
@@ -10,7 +11,11 @@ void greyScale() {
         float gray = (0.2989*r + 0.5870*g + 0.1140*b);
         pixels[i] = color(gray);
     }
+    
     updatePixels();
+    PImage newImage = get(tlbx, tlby, brbx, brby);
+    image(currScreen, 0,0);
+    image(newImage, tlbx, tlby, brbx, brby);
     popStyle();
     lastScreen.get();
 
@@ -20,6 +25,7 @@ void greyScale() {
 void contrast(float C) {
     currentTool = new Tool(5);
     pushStyle();
+    PImage currScreen = get();
     loadPixels();
     for (int i = 16000; i < pixels.length; i++) {
         color c = pixels[i];
@@ -39,6 +45,9 @@ void contrast(float C) {
         pixels[i] = color(r, g, b);
     }
     updatePixels();
+    PImage newImage = get(tlbx, tlby, brbx, brby);
+    image(currScreen, 0,0);
+    image(newImage, tlbx, tlby, brbx, brby);
     popStyle();
     lastScreen.get();
 

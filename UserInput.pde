@@ -4,7 +4,6 @@ PImage lastScreen;
 
 
 void mouseDragged() {
-
     // Only allow dragging below y=200, so tools won't affect the gui buttons.
     if (mouseY > 200 && pmouseY > 200) {
         isMouseDragged = true;
@@ -20,7 +19,7 @@ void mouseReleased() {
             currentTool.toolDone();
         }
         bottomRight = new PVector(mouseX, mouseY);
-        if (currentTool.type == "Pencil" || currentTool.type == "Eraser" || currentTool.type == "Blur") {
+        if (currentTool.type == "Pencil" || currentTool.type == "Eraser") {
         fullImage = get(0, 200, width, height - 200);
       }
     }
@@ -50,24 +49,28 @@ void keyPressed() {
     }
 
     if (key == 'u' || key == 'U') {
-        currentTool = new Undo(1);
+        currentTool = new Undo(toolSize, currentTool);
     }
     if (key == 'r' || key == 'R') {
-        currentTool = new Redo(1);
+        currentTool = new Redo(toolSize, currentTool);
     }
     if (key == 'b' || key == 'B') {
-        currentTool = new CropTool(1); 
+        currentTool = new CropTool(1, currentTool); 
     }
     if (key == '-' || key == '_') {
-        currentTool = new ZoomOut(1); 
+        currentTool = new ZoomOut(toolSize, currentTool); 
     }
     if (key == '=' || key == '+') {
-        currentTool = new ZoomIn(1); 
+        currentTool = new ZoomIn(toolSize, currentTool); 
     } 
+    
+    if (key == 0) {
+      image(fullImage, 0, 0, width, height);
+    }
 }
 
 void mousePressed() {
-    println("Mouse clicked at: " + mouseX + ", " + mouseY);
+    //println("Mouse clicked at: " + mouseX + ", " + mouseY);
     
     // checks if the mouse if clicked on the text box. if clicked, then turns off all keyboard shortcuts.
     if (mouseX >= 661 && mouseX <= 781 && mouseY >= 72 && mouseY <= 102) {
@@ -79,7 +82,7 @@ void mousePressed() {
     }
         // Check if mouse is in the button area (above y=200)
     if (mouseY < 200) {
-        println("Buton Area Clicked - Tool Action Skipped");
+        //println("Buton Area Clicked - Tool Action Skipped");
         return; // Doesn't apply whatever the current tool is on the button interface.
     }
     
@@ -89,14 +92,14 @@ void mousePressed() {
     if (clickedOnUI() == false) {
         
         if (currentTool != null) {
-            lastScreen = get(0,200,width,400); // Save the state before drawing
-            println(">>> Screen Saved (Valid Draw Action) <<<");
+            lastScreen = get(tlbx, tlby, brbx, brby); // Save the state before drawing
+            //println(">>> Screen Saved (Valid Draw Action) <<<");
             
             currentTool.applyTool();
             topLeft = new PVector(mouseX, mouseY);
         }
     } else {
-        println(">>> UI Click Detected - Save Skipped <<<");
+        //println(">>> UI Click Detected - Save Skipped <<<");
     }
 }
 

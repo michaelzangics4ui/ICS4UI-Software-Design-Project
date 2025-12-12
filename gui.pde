@@ -20,58 +20,40 @@ public void mode_clicked(GDropList source, GEvent event) { //_CODE_:mode:844633:
     switch(sel) {
         case "Pencil":
             currentTool = new Pencil(toolSize);
-            tool = "Pencil";
             break;
 
         case "Eraser":
             currentTool = new Eraser(toolSize);
-            tool = "Eraser";
             break;
 
         case "colDrop":
             currentTool = new colDrop(toolSize);
-            tool = "colDrop";
             break;
             
         case "Blur":
             currentTool = new Blur(toolSize);
-            tool = "Blur";
             break;
     }
 }
   //currentTool = mode.getSelectedText();} //_CODE_:mode:844633:
 
+public void crop_clicked(GButton source, GEvent event) { //_CODE_:crop:743868:
+  println("crop - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new CropTool(5, currentTool);
+} //_CODE_:crop:743868:
+
 public void zoomplus_clicked(GButton source, GEvent event) { //_CODE_:zoomplus:659262:
-  currentTool = new ZoomIn(1);
+  currentTool = new ZoomIn(toolSize, currentTool);
 } //_CODE_:zoomplus:659262:
 
 public void zoomminus_clicked(GButton source, GEvent event) { //_CODE_:zoomminus:480973:
-  currentTool = new ZoomOut(1);
+  currentTool = new ZoomOut(toolSize, currentTool);
 } //_CODE_:zoomminus:480973:
 
 public void size_changed(GCustomSlider source, GEvent event) { //_CODE_:size_slider:783959:
   toolSize = size_slider.getValueI();
-    switch(tool) {
-        case "Pencil":
-            currentTool = new Pencil(toolSize);
-            tool = "Pencil";
-            break;
-
-        case "Eraser":
-            currentTool = new Eraser(toolSize);
-            tool = "Eraser";
-            break;
-
-        case "colDrop":
-            currentTool = new colDrop(toolSize);
-            tool = "colDrop";
-            break;
-            
-        case "Blur":
-            currentTool = new Blur(toolSize);
-            tool = "Blur";
-            break;
-    }
+  currentTool.toolSize= toolSize;
+  image(screen, 0, 0);
 } //_CODE_:size_slider:783959:
 
 public void rotate_rightclicked(GButton source, GEvent event) { //_CODE_:rotate_right:702750:
@@ -81,6 +63,17 @@ public void rotate_rightclicked(GButton source, GEvent event) { //_CODE_:rotate_
 public void rotate_leftclicked(GButton source, GEvent event) { //_CODE_:rotate_left:293688:
   currentTool = new rotateLeft(1);
 } //_CODE_:rotate_left:293688:
+
+public void undo_clicked(GButton source, GEvent event) { //_CODE_:undo:653612:
+  println("undo - GButton >> GEvent." + event + " @ " + millis());
+  currentTool = new Undo(toolSize, currentTool);
+} //_CODE_:undo:653612:
+
+public void redo_clicked(GButton source, GEvent event) { //_CODE_:redo:248589:
+  println("redo - GButton >> GEvent." + event + " @ " + millis());
+    currentTool = new Redo(toolSize, currentTool);
+
+} //_CODE_:redo:248589:
 
 public void greyscale_clicked(GCheckbox source, GEvent event) { //_CODE_:greyscale:981413:
   greyScaleActive = greyscale.isSelected();
@@ -102,10 +95,6 @@ public void textbox_clicked(GTextField source, GEvent event) { //_CODE_:TEXT:215
   currentTool = new Text(1);
 } //_CODE_:TEXT:215710:
 
-public void crop_clicked(GButton source, GEvent event) { //_CODE_:crop:577439:
-  currentTool = new CropTool(1);
-} //_CODE_:crop:577439:
-
 
 
 // Create all the GUI controls. 
@@ -115,90 +104,76 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  mode = new GDropList(this, 7, 40, 120, 120, 5, 10);
+  mode = new GDropList(this, 40, 13, 120, 90, 5, 10);
   mode.setItems(loadStrings("list_844633"), 0);
   mode.addEventHandler(this, "mode_clicked");
-  zoomplus = new GButton(this, 240, 36, 80, 28);
+  crop = new GButton(this, 446, 65, 80, 30);
+  crop.setText("Crop");
+  crop.addEventHandler(this, "crop_clicked");
+  zoomplus = new GButton(this, 219, 66, 80, 30);
   zoomplus.setText("ZOOM +");
   zoomplus.addEventHandler(this, "zoomplus_clicked");
-  zoomminus = new GButton(this, 333, 34, 80, 30);
+  zoomminus = new GButton(this, 340, 20, 80, 30);
   zoomminus.setText("ZOOM -");
   zoomminus.addEventHandler(this, "zoomminus_clicked");
-  size_slider = new GCustomSlider(this, 147, 98, 100, 40, "blue18px");
+  size_slider = new GCustomSlider(this, 49, 112, 100, 40, "blue18px");
   size_slider.setLimits(10.0, 1.0, 50.0);
   size_slider.setNumberFormat(G4P.DECIMAL, 2);
   size_slider.setOpaque(false);
   size_slider.addEventHandler(this, "size_changed");
-  rotate_right = new GButton(this, 429, 33, 80, 30);
+  rotate_right = new GButton(this, 451, 20, 80, 30);
   rotate_right.setText("ROTATE RIGHT");
   rotate_right.addEventHandler(this, "rotate_rightclicked");
-  rotate_left = new GButton(this, 523, 32, 80, 30);
+  rotate_left = new GButton(this, 554, 20, 80, 30);
   rotate_left.setText("ROTATE LEFT");
   rotate_left.addEventHandler(this, "rotate_leftclicked");
-  greyscale = new GCheckbox(this, 338, 78, 120, 20);
+  undo = new GButton(this, 218, 21, 80, 30);
+  undo.setText("UNDO");
+  undo.addEventHandler(this, "undo_clicked");
+  redo = new GButton(this, 339, 64, 80, 30);
+  redo.setText("REDO");
+  redo.addEventHandler(this, "redo_clicked");
+  greyscale = new GCheckbox(this, 205, 127, 120, 20);
   greyscale.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   greyscale.setText("GREYSCALE");
+  greyscale.setLocalColorScheme(GCScheme.SCHEME_8);
   greyscale.setOpaque(false);
   greyscale.addEventHandler(this, "greyscale_clicked");
-  contrast = new GCheckbox(this, 474, 77, 120, 20);
+  contrast = new GCheckbox(this, 379, 126, 120, 20);
   contrast.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   contrast.setText("CONTRAST");
+  contrast.setLocalColorScheme(GCScheme.SCHEME_11);
   contrast.setOpaque(false);
   contrast.addEventHandler(this, "contrast_clicked");
-  schattmanify = new GCheckbox(this, 338, 116, 237, 20);
+  schattmanify = new GCheckbox(this, 556, 126, 237, 20);
   schattmanify.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   schattmanify.setText("SCHATTMANIFY (FACE REQUIRED)");
+  schattmanify.setLocalColorScheme(GCScheme.SCHEME_9);
   schattmanify.setOpaque(false);
   schattmanify.addEventHandler(this, "schattmanify_clicked");
-  title = new GLabel(this, 6, 7, 113, 34);
-  title.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  title.setText("OPTIX PHOTO EDITOR");
-  title.setOpaque(false);
-  reset = new GButton(this, 627, 75, 80, 30);
+  reset = new GButton(this, 551, 65, 80, 30);
   reset.setText("RESET");
   reset.setLocalColorScheme(GCScheme.RED_SCHEME);
   reset.addEventHandler(this, "reset_clicked");
-  TEXT = new GTextField(this, 616, 32, 120, 30, G4P.SCROLLBARS_NONE);
+  TEXT = new GTextField(this, 663, 47, 120, 28, G4P.SCROLLBARS_NONE);
   TEXT.setPromptText("TYPE TEXT HERE");
   TEXT.setOpaque(true);
   TEXT.addEventHandler(this, "textbox_clicked");
-  label1 = new GLabel(this, 145, 77, 80, 20);
-  label1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label1.setText("Size Slider");
-  label1.setOpaque(false);
-  crop = new GButton(this, 148, 36, 80, 30);
-  crop.setText("CROP");
-  crop.addEventHandler(this, "crop_clicked");
-  label2 = new GLabel(this, 317, 134, 353, 56);
-  label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label2.setText("NOTE: FILTERS GREYSCALE AND CONTRAST ARE NOT UNDOABLE UNLESS THEY ARE MOST RECENT CHANGE SINCE THEY MANIPULATE PIXELS.");
-  label2.setOpaque(false);
-  label3 = new GLabel(this, 242, 76, 80, 20);
-  label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label3.setText("UNDO - U");
-  label3.setOpaque(false);
-  label4 = new GLabel(this, 240, 97, 80, 20);
-  label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label4.setText("REDO - R");
-  label4.setOpaque(false);
 }
 
 // Variable declarations 
 // autogenerated do not edit
 GDropList mode; 
+GButton crop; 
 GButton zoomplus; 
 GButton zoomminus; 
 GCustomSlider size_slider; 
 GButton rotate_right; 
 GButton rotate_left; 
+GButton undo; 
+GButton redo; 
 GCheckbox greyscale; 
 GCheckbox contrast; 
 GCheckbox schattmanify; 
-GLabel title; 
 GButton reset; 
 GTextField TEXT; 
-GLabel label1; 
-GButton crop; 
-GLabel label2; 
-GLabel label3; 
-GLabel label4; 
